@@ -65,7 +65,7 @@ st.sidebar.pyplot(plot_helideck_sidebar(helideck_diameter, collector_area))
 
 
 
-cop = st.sidebar.slider("COP of Electric Heating System", 1.0, 6.0, 3.0)
+cop = st.sidebar.slider("COP of Electric Heating System", 2.0, 7.0, 4.5)
 usd_per_liter = st.sidebar.slider("Diesel Cost (USD/liter)", 0.5, 2.0, 1.2)
 helideck_area = collector_area
 collector_efficiency = 0.7
@@ -187,7 +187,7 @@ if len(st.session_state.coords_by_month) == 12:
         net_pool_heating = max(total_loss - pool_solar_gain, 0)
         net_saving = min(helideck_gain, net_pool_heating)
 
-        electrical_saving = net_saving * days / cop
+        electrical_saving = net_saving / cop
         diesel_kg = electrical_saving * 0.2
         el_energy_requierd = net_pool_heating / cop
         diesel_liters = diesel_kg / 0.84
@@ -202,8 +202,8 @@ if len(st.session_state.coords_by_month) == 12:
             "Electric heat requirement (kWh)": round(el_energy_requierd * days, 1),   
             "Solar collector thermal savings (kWh)": round(net_saving * days, 1),
             "Solar collector electric savings (kWh)": round(electrical_saving * days, 1),
-            "Diesel Saved (liters)": round(diesel_liters, 1),
-            "USD Saved": round(diesel_liters * usd_per_liter, 1),
+            "Diesel Saved (liters)": round(diesel_liters * days, 1),
+            "USD Saved": round(diesel_liters * usd_per_liter * days, 1),
         })
         
     df_result = pd.DataFrame(results)
