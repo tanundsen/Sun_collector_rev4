@@ -27,7 +27,7 @@ def compute_heat_losses(pool_temp, pool_area, pool_depth, T_day, T_night,
     seconds_per_hour = 3600
     hours_day = 24 - night_hours
 
-    evap_fact = 1 #Evaporation tuning factor
+    evap_fact = 0.7 #Evaporation tuning factor
 
     # Constants for radiation
     epsilon = 0.9  # emissivity
